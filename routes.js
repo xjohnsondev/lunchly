@@ -19,17 +19,16 @@ router.get("/", async function (req, res, next) {
   }
 });
 
-// router.get("/search", async function (req, res, next) {
-//   try {
-//     console.log(req.query); // Log all query parameters
-//     const value = req.query.search; // Access the 'search' query parameter
-//     console.log(value); // Log the value of 'search'
-//     // const customers = await Customer.search(value); // Perform actions with the search value
-//   } catch (e) {
-//     next(e);
-//   }
-// });
-
+router.get("/search", async function (req, res, next) {
+  try {
+    const value = req.query.search;
+    const customers = await Customer.search(value);
+    customers.forEach((c) => c.fullName());
+    return res.render("customer_list.html", { customers });
+  } catch (e) {
+    next(e);
+  }
+});
 
 /** Form to add a new customer. */
 
